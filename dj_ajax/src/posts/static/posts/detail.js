@@ -20,6 +20,8 @@ const titleInput = document.getElementById('id_title')
 const bodyInput = document.getElementById('id_body')
 const csrf = document. getElementsByName('csrfmiddlewaretoken')
 
+
+
 backBtn.addEventListener('click',  ()=>{
     history.back()
 })
@@ -85,6 +87,27 @@ updateForm.addEventListener('submit', e=>{
             handleAlerts('success', 'Post has been updated')
             title.textContent = response.title
             body.textContent = response.body
+        },
+        error: function(error){
+            console.log(error)
+        },
+    })
+})
+
+deleteForm.addEventListener('submit', e=>{
+    e.preventDefault()
+
+    $.ajax({
+        type: 'POST',
+        url: deleteurl,
+        data: {
+            'csrfmiddlewaretoken' : csrf[0].value,
+        },
+        success: function(response){
+            window.location.href = window.location.origin
+            localStorage.setItem('title', titleInput.value)
+
+            handleAlerts('success', 'Post has been updated')
         },
         error: function(error){
             console.log(error)

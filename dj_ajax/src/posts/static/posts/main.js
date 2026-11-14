@@ -11,6 +11,8 @@ const title = document.getElementById('id_title')
 const body = document.getElementById('id_body')
 const csrf = document. getElementsByName('csrfmiddlewaretoken')
 
+
+
 const url = window.location.href
 
 const alertBox = document.getElementById('alert-box')
@@ -47,6 +49,12 @@ const getCookie =(name) =>{
     return cookieValue;
 }
 const csrf_token = getCookie('csrftoken');
+
+const deleted =  localStorage.getItem('title')
+if (deleted){
+    handleAlerts('danger',`deleted "${deleted}"`)
+    localStorage.clear()
+}
 
 const likeUnlikePosts =() =>{
     const likeUnlikeForms = [...document.getElementsByClassName('like-unlike-forms')]
