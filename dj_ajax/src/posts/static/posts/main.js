@@ -1,26 +1,31 @@
 console.log("Hello world");
 
-const helloWorldBox = document.getElementById('hello-world')
+//const helloWorldBox = document.getElementById('hello-world')
 const postsBox = document.getElementById('posts-box')
 const spinnerBox = document.getElementById('spinner-box')
+const loadBtn = document.getElementById('load-btn')
+const endBox = document.getElementById('end-box')
 
 // helloWorldBox.innerHTML ='Hello <b>world<b>'
 
-$.ajax({
-        type: "GET",
-        url: '/hello-world/',
-        success: function(response){
-            console.log("success", response.text)
-            helloWorldBox.textContent = response.text
-        },
-        error: function (error) {
-            console.log('error', error)
-        }
-})
+//$.ajax({
+//        type: "GET",
+//        url: '/hello-world/',
+//      success: function(response){
+//            console.log("success", response.text)
+//           helloWorldBox.textContent = response.text
+//      },
+//      error: function (error) {
+//          console.log('error', error)
+//     }
+//})
 
-$.ajax({
+let visible = 3
+
+const getData =() =>{
+    $.ajax({
         type: "GET",
-        url: '/data/',
+        url: `/data/${visible}`,
         success: function(response){
             console.log(response)
             const data = response.data
@@ -48,8 +53,25 @@ $.ajax({
                     ` 
                 });
             }, 100);
+            console.log(response.size)
+            if (response.size === 0){
+                endBox.textContent = "No Posts added yet..."
+            }
+            else if (response.size <= visible){
+                loadBtn.classList.add('not-visible')
+                endBox.textContent = "No more posts to load..."
+            }
         },
         error: function (error) {
             console.log('error', error)
         }
+    })
+}
+
+loadBtn.addEventListener('click', ()=>{
+    spinnerBox.classList.remove('not-visible')
+    visible += 3
+    getData()
 })
+
+getData()
