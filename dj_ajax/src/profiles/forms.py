@@ -3,5 +3,5 @@ from .models import Profile
 
 class ProfileForm(forms.ModelForm):
     class Meta:
-        mode = Profile
-        fields = ('bio' 'avatar')
+        model = Profile
+        fields = ('bio', 'avatar')
